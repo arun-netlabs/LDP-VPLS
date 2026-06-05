@@ -1,0 +1,50 @@
+name: ldp-vpls
+
+topology:
+  kinds:
+    ceos:
+      image: ceos:latest
+
+  nodes:
+    CE-1:
+      kind: ceos
+      startup-config: configs/CE-1.cfg
+
+    PE-1:
+      kind: ceos
+      startup-config: configs/PE-1.cfg
+
+    P1:
+      kind: ceos
+      startup-config: configs/P1.cfg
+
+    P2:
+      kind: ceos
+      startup-config: configs/P2.cfg
+
+    PE-2:
+      kind: ceos
+      startup-config: configs/PE-2.cfg
+
+    CE-2:
+      kind: ceos
+      startup-config: configs/CE-2.cfg
+
+  links:
+    # CE-1 Eth1 <--> PE-1 Eth8 (Customer-facing, VLAN 10 access)
+    - endpoints: ["CE-1:eth1", "PE-1:eth8"]
+
+    # PE-1 Eth1 <--> P1 Eth1 (Core link: 10.0.10.0/30)
+    - endpoints: ["PE-1:eth1", "P1:eth1"]
+
+    # PE-1 Eth2 <--> P2 Eth1 (Core link: 10.0.20.0/30)
+    - endpoints: ["PE-1:eth2", "P2:eth1"]
+
+    # P1 Eth2 <--> PE-2 Eth1 (Core link: 10.0.30.0/30)
+    - endpoints: ["P1:eth2", "PE-2:eth1"]
+
+    # P2 Eth2 <--> PE-2 Eth2 (Core link: 10.0.40.0/30)
+    - endpoints: ["P2:eth2", "PE-2:eth2"]
+
+    # PE-2 Eth8 <--> CE-2 Eth1 (Customer-facing, VLAN 10 access)
+    - endpoints: ["PE-2:eth8", "CE-2:eth1"]

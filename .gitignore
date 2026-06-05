@@ -1,0 +1,12 @@
+# Containerlab
+clab-*/
+*.bak
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Downloaded LinkedIn files (not needed in repo)
+*.pdf
+*.html
+*_files/
